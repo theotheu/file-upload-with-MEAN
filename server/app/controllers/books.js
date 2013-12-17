@@ -15,6 +15,10 @@ exports.upload = function (req, res) {
     var filename = oldPath.split("/")[2];
     var newPath = __dirname + "/../../../client/images/uploads/" + filename;
 
+
+
+    console.log(req.body);
+
     fs.rename(oldPath, newPath, function (err) {
         if (err === null) {
             var book = {

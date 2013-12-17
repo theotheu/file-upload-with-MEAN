@@ -5,13 +5,8 @@
     <link type="text/css" rel="stylesheet" href="css/common.css">
     <title>Angular file upload sample</title>
     <script src="javascripts/lib/angular-file-upload-shim.js"></script>
-    <script type="text/javascript">
-        // load angularjs specific version
-        var angularVersion = window.location.hash.substring(1);
-        document.write('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/' + (angularVersion || '1.2.0') + '/angular.js"><\/script>');
-    </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
     <script src="javascripts/lib/angular-file-upload.js"></script>
-    <!-- <script src="http://cdn.jsdelivr.net/angular.file-upload/1.0.0/angular-file-upload.min.js"></script> -->
 </head>
 
 <body ng-app="fileUpload" ng-controller="MyCtrl">
@@ -22,7 +17,9 @@
 <h1>Angular file upload Demo</h1>
 
 <div>
-    Model object to be sent to the server with the file: <input type="text" ng-model="myModel"> <br/>
+    title: <input type="text" ng-model="title"> <br/>
+    author: <input type="text" ng-model="author"> <br/>
+    description: <input type="text" ng-model="description"> <br/>
     choose a single file: <input type="file" ng-file-select="onFileSelect($files)">
     <br/>
     or multiple files: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="file" ng-file-select="onFileSelect($files)" multiple>
@@ -45,7 +42,7 @@
         <div class="sel-file" ng-repeat="f in selectedFiles">
             <img ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}">
             <button class="button" ng-click="start($index)" ng-show="progress[$index] < 0">Start</button>
-				<span class="progress" ng-show="progress[$index] >= 0">						
+				<span class="progress" ng-show="progress[$index] >= 0">
 					<div style="width:{{progress[$index]}}%">{{progress[$index]}}%</div>
 				</span>
             <button class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100">
@@ -133,7 +130,9 @@
                 url: 'upload',
                 headers: {'myHeaderKey': 'myHeaderVal'},
                 data: {
-                    myModel: $scope.myModel
+                    title: $scope.title,
+                    author: $scope.author,
+                    description: $scope.description
                 },
                 /*                formDataAppender: function(fd, key, val) {
                  if (angular.isArray(val)) {
