@@ -19,7 +19,7 @@ npm-debug.log
 config.js
 
 node_modules
-client/images/uploads/*
+client/images/uploads/
 
 .idea
 
