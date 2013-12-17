@@ -20,6 +20,9 @@ Go to the working directory
 cd ~/workspaces/file-uploadDemo
 ```
 
+*Make sure you have a directory client/images/uploads.*
+
+
 Configuration
 ----------
 Copy ```config.js.default``` to ```config.js```.
