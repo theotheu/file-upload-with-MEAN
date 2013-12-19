@@ -76,6 +76,6 @@ Instructions to prepare a deployment
 ===================================
 
 * Verify that you have a explanatory README.md
-* Make an export of your data with mongodump ```mongodump --collection collection --db test``` (see http://docs.mongodb.org/v2.2/reference/mongodump/)
+* Make an export of your data with mongodump ```mongodump --collection collection --db test --out ~/workspaces/file-uploadDemo/data``` (see http://docs.mongodb.org/v2.2/reference/mongodump/)
 * Create in your repository a directory ```data``` where you put your export, with import instructions.
 * Push the repository
