@@ -31,7 +31,6 @@ model_files.forEach(function (file) {
 var app = express();
 app.configure(function () {
     app.set('port', process.env.PORT || config.port);
-    app.set('views', path.join(__dirname, './app/views/'));
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(express.json());
