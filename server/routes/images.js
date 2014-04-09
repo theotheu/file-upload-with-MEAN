@@ -9,20 +9,20 @@ module.exports = function (app) {
      We map the URL to a method in the created variable "user".
      In this example is a mapping for every CRUD action.
      */
-    var controller = require('../app/controllers/books.js');
+    var controller = require('../app/controllers/images.js');
 
     // CREATE
-    app.post('/books', controller.create);
+    app.post('/images', controller.create);
     app.post('/upload', controller.upload);
 
     // RETRIEVE
-    app.get('/books', controller.list);
-    app.get('/books/:_id', controller.detail);
+    app.get('/images', controller.list);
+    app.get('/images/:_id', controller.detail);
 
     // UPDATE
-    app.put('/books/:_id', controller.update);
+    app.put('/images/:_id', controller.update);
 
     // DELETE
-    app.delete('/books/:_id', controller.delete);
+    app.delete('/images/:_id', controller.delete);
 
 }

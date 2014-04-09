@@ -11,7 +11,7 @@ mongoose = require('mongoose'),
 
 /* Schema definitions */
 var schemaName = Schema({
-    title: {type: String, required: true, unique: true},
+    title: {type: String, required: true},
     author: {type: String, required: true},
     description: {type: String},
     image: {                                // <--- nested document (not sub document)
@@ -26,14 +26,14 @@ var schemaName = Schema({
 
 // Custom validator
 schemaName.path('title').validate(function (val) {
-    return (val !== undefined && val !== null && val.length >= 8);
+    return (val !== undefined && val !== null && val.length >= 3);
 }, 'Invalid title');
 
 /*
  If collectionName is absent as third argument, than the modelName should always end with an -s.
  Mongoose pluralizes the model name. (This is not documented)
  */
-var modelName = "Book";
-var collectionName = "books"; // Naming convention is plural.
+var modelName = "Image";
+var collectionName = "images"; // Naming convention is plural.
 mongoose.model(modelName, schemaName, collectionName);
 

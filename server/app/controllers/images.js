@@ -4,7 +4,7 @@
 
 var mongoose = require('mongoose')
     , fs = require('fs')
-    , Book = mongoose.model('Book')
+    , Image = mongoose.model('Image')
     ;
 
 
@@ -12,16 +12,19 @@ var mongoose = require('mongoose')
 exports.upload = function (req, res) {
 
     var oldPath = req.files.myFile.path;
-    var filename = oldPath.split("/")[2];
-    var newPath = __dirname + "/../../../client/images/uploads/" + filename;
+    var separator = '/';
+    var filename = oldPath.split(separator)[oldPath.split(separator).length-1];
+    var newPath = [__dirname, '..', '..' , '..', 'client', 'images', 'uploads', '', filename].join(separator);
 
-
-
-    console.log(req.body);
+    console.log('>>>>>>>>>>>>>>');
+    console.log('__dirname', __dirname);
+    console.log('oldPath', oldPath);
+    console.log('newPath: ', newPath);
+    console.log('filename: ', filename);
 
     fs.rename(oldPath, newPath, function (err) {
         if (err === null) {
-            var book = {
+            var image = {
                 title: req.body.title || "???",
                 author: req.body.author || "???",
                 description: req.body.description || "???",
@@ -33,7 +36,9 @@ exports.upload = function (req, res) {
                     filename: filename
                 }
             };
-            doc = new Book(book);
+            doc = new Image(image);
+
+            console.log('Renaming file to ', req.files.myFile.name);
 
             doc.save(function (err) {
 
@@ -50,9 +55,9 @@ exports.upload = function (req, res) {
 
 exports.create = function (req, res) {
 
-    console.log('CREATE book.');
+    console.log('CREATE image.');
 
-    var doc = new Book(req.body);
+    var doc = new Image(req.body);
 
     doc.save(function (err) {
 
@@ -69,17 +74,17 @@ exports.create = function (req, res) {
 }
 
 // RETRIEVE
-// Get all books
+// Get all images
 exports.list = function (req, res) {
     var conditions, fields, options;
 
-    console.log('GET books.');
+    console.log('GET images.');
 
     conditions = {};
     fields = {};
     sort = {'modificationDate': -1};
 
-    Book
+    Image
         .find(conditions, fields, options)
         .sort(sort)
         .exec(function (err, doc) {
@@ -95,17 +100,17 @@ exports.list = function (req, res) {
         })
 }
 
-// Get 1 book
+// Get 1 image
 exports.detail = function (req, res) {
     var conditions, fields, options;
 
-    console.log('GET book. ' + req.params._id);
+    console.log('GET image. ' + req.params._id);
 
     conditions = {_id: req.params._id}
         , fields = {}
         , options = {'createdAt': -1};
 
-    Book
+    Image
         .find(conditions, fields, options)
         .exec(function (err, doc) {
             var retObj = {
@@ -120,7 +125,7 @@ exports.detail = function (req, res) {
 // UPDATE
 exports.update = function (req, res) {
 
-    console.log('Updating book...\n', req.params_id, req.body);
+    console.log('Updating image...\n', req.params_id, req.body);
 
     var conditions =
         {_id: req.params._id}
@@ -139,7 +144,7 @@ exports.update = function (req, res) {
             return res.send(retObj);
         };
 
-    Book
+    Image
         .findOneAndUpdate(conditions, update, options, callback);
 }
 
@@ -148,7 +153,7 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
     var conditions, callback, retObj;
 
-    console.log('Deleting book. ', req.params._id);
+    console.log('Deleting image. ', req.params._id);
 
     conditions = {_id: req.params._id}
         , callback = function (err, doc) {
@@ -160,6 +165,6 @@ exports.delete = function (req, res) {
         return res.send(retObj);
     }
 
-    Book
+    Image
         .remove(conditions, callback);
 }
