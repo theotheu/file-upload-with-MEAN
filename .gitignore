@@ -16,7 +16,6 @@ logs
 results
 
 npm-debug.log
-config.js
 
 node_modules
 client/images/uploads/

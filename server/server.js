@@ -9,7 +9,15 @@ var express = require('express')
     , fs = require('fs')
     , http = require('http')
     , path = require('path')
+    , morgan = require('morgan')
+    , methodOverride = require('method-override')
+    , session = require('express-session')
+    , cookieParser = require('cookie-parser')
+    , favicon = require('static-favicon')
     ;
+
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+
 
 // Load configuration
 var env = process.env.NODE_ENV || 'development'
@@ -30,29 +38,43 @@ model_files.forEach(function (file) {
 
 
 var app = express();
+
+app.listen(process.env.PORT || config.port);    // listen on the configured port number
+app.use(favicon(__dirname + '/public/favicon.ico'));
+if (env === 'development') {
+    app.use(morgan('dev')); 					// log every request to the console
+}
+
+
+app.use(methodOverride()); 					    // simulate DELETE and PUT
+app.use(cookieParser());                        // required before session.
+app.use(session({ secret: 'keyboard cat', key: 'sid'}));    // https://github.com/expressjs/session/blob/master/README.md
+app.use(express.static(path.join(__dirname, '../client')));
+
+/*
 app.configure(function () {
-    app.set('port', process.env.PORT || config.port);
-    app.use(express.favicon());
-    app.use(express.logger('dev'));
-    app.use(express.json());
-    app.use(express.urlencoded());
+//   app.set('port', process.env.PORT || config.port);
+//   app.use(express.favicon());
+//  app.use(express.logger('dev'));
+//   app.use(express.json());
+//  app.use(express.urlencoded());
     // vvvvvvvvv begin multipart, used for file upload
     app.use(express.multipart());
     // ^^^^^^^^^ end multipart
-    app.use(express.methodOverride());
-    app.use(express.cookieParser('your secret here'));
-    app.use(express.session());
-    app.use(app.router);
+//  app.use(express.methodOverride());
+//  app.use(express.cookieParser('your secret here'));
+//  app.use(express.session());
+//  app.use(app.router);
     app.use(express.static(path.join(__dirname, '../client')));
 });
 
 app.configure('development', function () {
     app.use(express.errorHandler());
 });
-
+*/
 // Bootstrap http server
 http.createServer(app).listen(app.get('port'), function () {
-    console.log("Express server listening on port " + app.get('port'));
+    console.log("Express server listening on port " + config.port);
 });
 
 // Bootstrap routes

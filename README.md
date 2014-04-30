@@ -59,9 +59,16 @@ cd ~/workspaces/file-uploadDemo/server
 npm install
 ```
 
+Set environment
+---------------
+Set the environment variable for development (default), test or production
+
+```export NODE_ENV=development```
+
 supervisor
 ----------
 Make sure you have supervisor installed - with the global option
+
 
 ```sh
 npm install -g supervisor
