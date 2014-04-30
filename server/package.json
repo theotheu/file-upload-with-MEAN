@@ -13,6 +13,7 @@
     "static-favicon": "~1.0.2",
     "method-override": "~1.0.0",
     "cookie-parser": "~1.0.1",
-    "express-session": "~1.0.4"
+    "express-session": "~1.0.4",
+    "connect": "~2.14.5"
   }
 }

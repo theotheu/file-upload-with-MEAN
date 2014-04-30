@@ -9,15 +9,13 @@ var express = require('express')
     , fs = require('fs')
     , http = require('http')
     , path = require('path')
+    , connect = require('connect')
     , morgan = require('morgan')
     , methodOverride = require('method-override')
     , session = require('express-session')
     , cookieParser = require('cookie-parser')
     , favicon = require('static-favicon')
     ;
-
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-
 
 // Load configuration
 var env = process.env.NODE_ENV || 'development'
@@ -28,6 +26,13 @@ var env = process.env.NODE_ENV || 'development'
 var mongoose = require('mongoose')
     , Schema = mongoose.Schema
 mongoose.connect(config.db);
+
+// Set debugging on/off
+if (config.debug) {
+    mongoose.set('debug', true);
+} else {
+    mongoose.set('debug', false);
+}
 
 // Bootstrap models
 var models_path = __dirname + '/app/models'
@@ -45,6 +50,7 @@ if (env === 'development') {
     app.use(morgan('dev')); 					// log every request to the console
 }
 
+app.use(connect.multipart());
 
 app.use(methodOverride()); 					    // simulate DELETE and PUT
 app.use(cookieParser());                        // required before session.

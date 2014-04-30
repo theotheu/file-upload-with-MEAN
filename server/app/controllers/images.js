@@ -16,7 +16,7 @@ exports.upload = function (req, res) {
     var filename = oldPath.split(separator)[oldPath.split(separator).length-1];
     var newPath = [__dirname, '..', '..' , '..', 'client', 'images', 'uploads', '', filename].join(separator);
 
-    console.log('>>>>>>>>>>>>>>');
+    console.log('>>>>>');
     console.log('__dirname', __dirname);
     console.log('oldPath', oldPath);
     console.log('newPath: ', newPath);
