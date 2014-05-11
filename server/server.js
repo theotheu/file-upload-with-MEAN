@@ -50,7 +50,7 @@ if (env === 'development') {
     app.use(morgan('dev')); 					// log every request to the console
 }
 
-app.use(connect.multipart());
+app.use(connect.multipart());                   // required for file upload
 
 app.use(methodOverride()); 					    // simulate DELETE and PUT
 app.use(cookieParser());                        // required before session.
